@@ -1,0 +1,100 @@
+// ENCRYPTED CODE - DO NOT MODIFY
+const _0x3a8b2a = ['\x46\x41\x48\x41\x44\x20\x54\x49\x4b\x54\x4f\x4b','\x44\x4f\x57\x4e\x4c\x4f\x41\x44\x45\x52','\x74\x69\x6b\x74\x6f\x6b','\x6c\x6f\x61\x64\x69\x6e\x67','\x72\x65\x73\x75\x6c\x74','\x65\x72\x72\x6f\x72','\x67\x65\x74\x45\x6c\x65\x6d\x65\x6e\x74\x42\x79\x49\x64','\x76\x61\x6c\x75\x65','\x68\x74\x74\x70\x73\x3a\x2f\x2f','\x61\x64\x64\x45\x76\x65\x6e\x74\x4c\x69\x73\x74\x65\x6e\x65\x72','\x63\x6c\x69\x63\x6b','\x6b\x65\x79\x70\x72\x65\x73\x73','\x74\x72\x69\x6d','\x69\x6e\x63\x6c\x75\x64\x65\x73','\x73\x68\x6f\x77','\x68\x69\x64\x65','\x74\x65\x78\x74\x43\x6f\x6e\x74\x65\x6e\x74','\x66\x65\x74\x63\x68','\x6a\x73\x6f\x6e','\x64\x61\x74\x61','\x70\x6c\x61\x79','\x61\x75\x74\x68\x6f\x72','\x74\x69\x74\x6c\x65','\x73\x72\x63','\x63\x6f\x6e\x74\x72\x6f\x6c\x73','\x63\x72\x65\x61\x74\x65\x45\x6c\x65\x6d\x65\x6e\x74','\x64\x69\x76','\x63\x6c\x61\x73\x73\x4c\x69\x73\x74','\x61\x64\x64','\x69\x6e\x6e\x65\x72\x48\x54\x4d\x4c','\x61\x70\x70\x65\x6e\x64\x43\x68\x69\x6c\x64','\x62\x6c\x6f\x62','\x63\x72\x65\x61\x74\x65\x4f\x62\x6a\x65\x63\x74\x55\x52\x4c','\x64\x6f\x77\x6e\x6c\x6f\x61\x64','\x72\x65\x76\x6f\x6b\x65\x4f\x62\x6a\x65\x63\x74\x55\x52\x4c','\x61\x6c\x65\x72\x74','\x6f\x70\x65\x6e'];
+
+function _0x4d8e(_0x2b8f3d,_0x1a7d6c){_0x2b8f3d=_0x2b8f3d-0x0;let _0x3a8b2a2=_0x3a8b2a[_0x2b8f3d];return _0x3a8b2a2;}
+
+class EncryptedDownloader{
+    constructor(){
+        this[_0x4d8e('0x0')]=null;
+        this.init();
+    }
+    init(){
+        document[_0x4d8e('0x6')]('downloadBtn')[_0x4d8e('0x9')](_0x4d8e('0xa'),()=>this.downloadVideo());
+        document[_0x4d8e('0x6')]('tiktokUrl')[_0x4d8e('0x9')](_0x4d8e('0xb'),(e)=>{if(e.key==='Enter')this.downloadVideo();});
+    }
+    async downloadVideo(){
+        const url=document[_0x4d8e('0x6')]('tiktokUrl')[_0x4d8e('0x7')][_0x4d8e('0xc')]();
+        if(!url){this.showError('Please paste TikTok URL');return;}
+        if(!url[_0x4d8e('0xd')](_0x4d8e('0x2'))){this.showError('Invalid URL');return;}
+        this.showLoading();this.hideError();this.hideResult();
+        try{
+            const videoData=await this.fetchVideoData(url);
+            if(videoData){this.currentVideo=videoData;await this.displayVideo();this.createOptions();this.showResult();}
+            else{throw new Error('Fetch failed');}
+        }catch(e){this.showError(e.message);}finally{this.hideLoading();}
+    }
+    async fetchVideoData(url){
+        const apis=['https://tikwm.com/api/?url=','https://www.tikwm.com/api/?url='];
+        for(const api of apis){
+            try{
+                const response=await fetch(api+encodeURIComponent(url),{headers:{'User-Agent':'Mozilla/5.0'}});
+                if(response.ok){
+                    const data=await response[_0x4d8e('0x12')]();
+                    if(data.code===0&&data.data){
+                        return{
+                            url:data.data[_0x4d8e('0x13')]||data.data.wmplay,
+                            title:data.data[_0x4d8e('0x15')]||'Video',
+                            author:data.data[_0x4d8e('0x14')]?.nickname||'User'
+                        };
+                    }
+                }
+            }catch(e){continue;}
+        }
+        throw new Error('API failed');
+    }
+    async displayVideo(){
+        const videoElement=document[_0x4d8e('0x6')]('videoElement');
+        if(this.currentVideo.url){
+            videoElement[_0x4d8e('0x16')]=this.currentVideo.url;
+            videoElement[_0x4d8e('0x17')]=true;
+            await new Promise((resolve)=>{videoElement.onloadeddata=resolve;setTimeout(resolve,2000);});
+        }
+    }
+    createOptions(){
+        const optionsDiv=document[_0x4d8e('0x6')]('downloadOptions');
+        optionsDiv[_0x4d8e('0x1e')]='';
+        const qualities=[{name:'HD',icon:'',color:'#00f3ff'},{name:'ORIGINAL',icon:'',color:'#00ff88'},{name:'FAST',icon:'',color:'#ff0055'}];
+        qualities.forEach(q=>{
+            const card=document[_0x4d8e('0x19')]('div');
+            card[_0x4d8e('0x1a')][_0x4d8e('0x1b')]('option-card');
+            card[_0x4d8e('0x1c')]=`
+                <div style="font-size:40px">${q.icon}</div>
+                <h3 style="color:${q.color}">${q.name}</h3>
+                <button class="btn" onclick="downloader.startDownload('${q.name}')" style="background:${q.color}">
+                    <i class="fas fa-download"></i> DOWNLOAD
+                </button>
+            `;
+            optionsDiv[_0x4d8e('0x1d')](card);
+        });
+    }
+    async startDownload(type){
+        if(!this.currentVideo?.url){this.showError('No video');return;}
+        this.showLoading();
+        try{
+            const response=await fetch(this.currentVideo.url);
+            const blob=await response[_0x4d8e('0x1f')]();
+            const url=window[_0x4d8e('0x20')](blob);
+            const a=document[_0x4d8e('0x19')]('a');
+            a.href=url;a[_0x4d8e('0x21')]=`TIKTOK_${Date.now()}.mp4`;
+            document.body[_0x4d8e('0x1d')](a);a.click();document.body.removeChild(a);
+            window[_0x4d8e('0x22')](url);
+        }catch(e){
+            const a=document[_0x4d8e('0x19')]('a');
+            a.href=this.currentVideo.url;a.target='_blank';
+            document.body[_0x4d8e('0x1d')](a);a.click();document.body.removeChild(a);
+        }finally{this.hideLoading();}
+    }
+    showLoading(){document[_0x4d8e('0x6')](_0x4d8e('0x3'))[_0x4d8e('0xe')]='block';}
+    hideLoading(){document[_0x4d8e('0x6')](_0x4d8e('0x3'))[_0x4d8e('0xf')]='none';}
+    showError(m){document[_0x4d8e('0x6')]('errorMessage')[_0x4d8e('0x10')]=m;document[_0x4d8e('0x6')](_0x4d8e('0x5'))[_0x4d8e('0xe')]='block';}
+    hideError(){document[_0x4d8e('0x6')](_0x4d8e('0x5'))[_0x4d8e('0xf')]='none';}
+    showResult(){document[_0x4d8e('0x6')](_0x4d8e('0x4'))[_0x4d8e('0xe')]='block';}
+    hideResult(){document[_0x4d8e('0x6')](_0x4d8e('0x4'))[_0x4d8e('0xf')]='none';}
+}
+
+let downloader;
+window.addEventListener('DOMContentLoaded',()=>{
+    downloader=new EncryptedDownloader();
+    window.downloader=downloader;
+    console.log('Tool Initialized');
+});
